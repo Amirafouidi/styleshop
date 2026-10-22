@@ -8,9 +8,6 @@ public class Cart {
     private final List<CartItem> items = new ArrayList<>();
 
     public void addItem(Product product, Size size, int quantity) {
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("La quantité doit être positive.");
-        }
         // Si l'article dans cette même taille est déjà présent, on incrémente la quantité
         for (CartItem item : items) {
             if (item.getProduct().getId().equals(product.getId()) && item.getSize() == size) {
