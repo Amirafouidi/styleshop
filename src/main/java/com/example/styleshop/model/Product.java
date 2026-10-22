@@ -3,6 +3,7 @@ package com.example.styleshop.model;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
+import com.example.styleshop.exception.OutOfStockException;
 
 public abstract class Product {
     private final String id;
@@ -33,8 +34,11 @@ public abstract class Product {
     }
 
     public void reduceStock(Size size, int quantity) {
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("La quantité doit être positive.");
+        }
         if (!hasStock(size, quantity)) {
-            throw new IllegalArgumentException("Stock insuffisant pour la taille " + size);
+            throw new OutOfStockException("Stock insuffisant pour " + name + " en taille " + size);
         }
         stockBySize.put(size, stockBySize.get(size) - quantity);
     }
