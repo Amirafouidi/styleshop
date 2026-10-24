@@ -1,0 +1,9 @@
+type,id,name,price,size,stock
+CLOTHING,C1,T-shirt blanc,19.90,S,10
+CLOTHING,C1,T-shirt blanc,19.90,M,15
+CLOTHING,C1,T-shirt blanc,19.90,L,8
+CLOTHING,C2,Jean slim,49.90,M,6
+CLOTHING,C2,Jean slim,49.90,L,4
+SHOES,S1,Baskets urbaines,59.90,M,5
+SHOES,S1,Baskets urbaines,59.90,L,3
+ACCESSORY,A1,Casquette,14.90,ONE_SIZE,20
