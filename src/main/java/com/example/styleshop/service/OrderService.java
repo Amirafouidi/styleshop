@@ -27,7 +27,7 @@ public class OrderService {
         // Le calcul vient en premier : il lance EmptyCartException si le panier est vide
         double total = pricingService.calculateFinalTotal(cart, customer, promo);
 
-        // On vérifie TOUT le stock avant d'en retirer, sinon une erreur
+        // On vérifie tout le stock avant d'en retirer, sinon une erreur
         // sur le 3e article laisserait les 2 premiers déjà retirés
         for (CartItem item : cart.getItems()) {
             if (!item.getProduct().hasStock(item.getSize(), item.getQuantity())) {
@@ -41,7 +41,6 @@ public class OrderService {
         }
 
         Order order = new Order(UUID.randomUUID().toString(), customer, cart.getItems(), total);
-        order.markAsPaid();
         cart.clear();
         return order;
     }
@@ -53,5 +52,11 @@ public class OrderService {
         for (CartItem item : order.getItems()) {
             item.getProduct().addStock(item.getSize(), item.getQuantity());
         }
+    }
+    public void shipOrder(Order order) {
+        order.markAsShipped();
+    }
+    public void payOrder(Order order) {
+        order.markAsPaid();
     }
 }

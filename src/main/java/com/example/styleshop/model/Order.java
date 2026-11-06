@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Order {
+    // ENCAPSULATION : tout est privé et final sauf le statut, seule donnée qui évolue
 
     private final String id;
     private final Customer customer;
@@ -23,6 +24,9 @@ public class Order {
         this.total = total;
     }
 
+    // CYCLE DE VIE : chaque méthode ci-dessous n'est autorisée qu'à partir de certains statuts.
+    // PENDING -> PAID -> SHIPPED -> RETURNED, avec CANCELLED possible avant l'expédition.
+    // Sinon on lève une IllegalStateException : l'objet protège lui-même sa cohérence.
     public void markAsPaid() {
         if (status != OrderStatus.PENDING) {
             throw new IllegalStateException("Seule une commande en attente peut être payée.");
@@ -36,9 +40,16 @@ public class Order {
         }
         status = OrderStatus.CANCELLED;
     }
+    public void markAsShipped() {
+        if (status != OrderStatus.PAID) {
+            throw new IllegalStateException("Seule une commande payée peut être expédiée.");
+        }
+        status = OrderStatus.SHIPPED;
+    }
+
     public void markAsReturned() {
-        if (status != OrderStatus.PAID && status != OrderStatus.SHIPPED) {
-            throw new IllegalStateException("Seule une commande payée ou expédiée peut être retournée.");
+        if (status != OrderStatus.SHIPPED) {
+            throw new IllegalStateException("Seule une commande expédiée peut être retournée.");
         }
         status = OrderStatus.RETURNED;
     }

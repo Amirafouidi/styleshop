@@ -12,6 +12,12 @@ public abstract class Product {
     private final Map<Size, Integer> stockBySize = new EnumMap<>(Size.class);
 
     protected Product(String id, String name, double price) {
+        if (id == null || id.isBlank() || name == null || name.isBlank()) {
+            throw new IllegalArgumentException("L'id et le nom sont obligatoires.");
+        }
+        if (price < 0) {
+            throw new IllegalArgumentException("Le prix ne peut pas être négatif.");
+        }
         this.id = id;
         this.name = name;
         this.price = price;

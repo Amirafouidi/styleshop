@@ -31,6 +31,9 @@ public class PricingService {
         // 2. Code promo
         total = promo.apply(total);
 
+        // Arrondi au centime : sans ça, 50 € peut devenir 49.999999 et rater le seuil de livraison
+        total = Math.round(total * 100) / 100.0;
+
         // 3. Livraison, calculée sur le total après remises
         return total + shippingCalculator.calculate(customer, total);
     }
